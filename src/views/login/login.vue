@@ -105,8 +105,14 @@ export default {
         if (valid) {
           this.loading = true
           this.login(this.loginForm).then((res) => {
-            if(res.status === 200){
+            if(res.data.code === 200){
+              this.$message({
+                message: '登录成功',
+                type: 'success'
+              });
               this.$router.push({ path: '/' })
+            }else {
+              this.$message.error('用户名密码错误');
             }
             this.loading = false
           }).catch(() => {

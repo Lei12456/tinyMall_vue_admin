@@ -31,7 +31,7 @@
                 type="daterange"
                 align="right"
                 unlink-panels
-                value-format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
@@ -356,11 +356,11 @@ export default {
         }
     },
     getAllOrderData(){
-      this.getAllOrder().then((res) => {
-        if(res.data.code == 200){
-           this.pageTotal  = res.data.result.length;
-        }
-      })
+      // this.getAllOrder().then((res) => {
+      //   if(res.data.code == 200){
+      //      this.pageTotal  = res.data.result.length;
+      //   }
+      // })
     },
     loadOrder(){
       let params = {
@@ -370,7 +370,8 @@ export default {
       }
       this.getOrderPage(params).then((res) => {
         if(res.data.code == 200){
-          this.orders = res.data.result;
+          this.orders = res.data.result.orderList;
+          this.pageTotal  = res.data.result.total;
           if(res.data.result.length == 0){
             this.pageParams.page - 1;
             //this.loadOrder();

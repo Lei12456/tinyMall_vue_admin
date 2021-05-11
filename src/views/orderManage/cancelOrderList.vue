@@ -151,7 +151,7 @@ export default {
           this.cancelOrders = res.data.result;
           if(res.data.result.length == 0){
             this.pageParams.page - 1;
-            this.loadCancelOrder();
+            //this.loadCancelOrder();
           }
         }else {
   

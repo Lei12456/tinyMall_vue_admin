@@ -1,11 +1,8 @@
 @font-face {
-  font-family: 'iconfont';  /* project id 2464262 */
-  src: url('//at.alicdn.com/t/font_2464262_hwtirxxilzo.eot');
-  src: url('//at.alicdn.com/t/font_2464262_hwtirxxilzo.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2464262_hwtirxxilzo.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2464262_hwtirxxilzo.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2464262_hwtirxxilzo.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2464262_hwtirxxilzo.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* Project id 2464262 */
+  src: url('//at.alicdn.com/t/font_2464262_pi0px3n7ll8.woff2?t=1620270543628') format('woff2'),
+       url('//at.alicdn.com/t/font_2464262_pi0px3n7ll8.woff?t=1620270543628') format('woff'),
+       url('//at.alicdn.com/t/font_2464262_pi0px3n7ll8.ttf?t=1620270543628') format('truetype');
 }
   /* 定义阿里云图标样式 */
 .iconfont{

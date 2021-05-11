@@ -31,7 +31,7 @@
           <el-select style="width:250px" v-model="subTypeForm.typeId" placeholder="请选择父类别">
                 <el-option  v-for="item in typeList" v-bind:key="item.id" :label="item.name" :value="item.id">
                 </el-option>
-            </el-select>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -301,8 +301,8 @@ export default {
                 }else {
                     this.$notify({
                       title: '删除',
-                      message: ('i', { style: 'color: teal'}, '更新品牌列表成功'),
-                      type:'fail'
+                      message: ('i', { style: 'color: teal'}, '更新品牌列表失败'),
+                      type:'faild'
                     });
 
                 }
@@ -315,7 +315,7 @@ export default {
               });          
          });   
     },  
-    saveSubTypeHandle(){
+      saveSubTypeHandle(){
        let params = {
         type : null,
         subType:this.subTypeForm

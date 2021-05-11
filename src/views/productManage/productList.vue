@@ -379,8 +379,8 @@ export default {
     },
     handleEdit(index,row){
       let productData = row;
-      productData['brandId'] =  row['brand'].id;
-      productData['subTypeId'] =  row['productSubType'].id;
+      productData['brandId'] =  row['brand'].brandName;
+      productData['subTypeId'] =  row['productSubType'].subName;
       Vue.delete(productData,'brand');
       Vue.delete(productData,'productSubType');
       //携带参数跳转到编辑商品的页面

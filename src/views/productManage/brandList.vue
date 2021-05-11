@@ -14,13 +14,19 @@
         <el-form-item label="编号" label-width="120px" style="display:none">
           <el-input v-model="brandForm.id" autocomplete="off" ></el-input>
         </el-form-item>
-        <el-form-item label="名称" label-width="60px">
+        <el-form-item label="名称" label-width="70px">
           <el-input v-model="brandForm.brandName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="英文名" label-width="60px">
+        <el-form-item label="所属类别" label-width="70px">
+          <el-select v-model="brandForm.subTypeId"  placeholder="请选择所属类别">
+                <el-option  v-for="item in subTypeList" v-bind:key="item.id" :label="item.subName" :value="item.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="英文名" label-width="70px">
            <el-input v-model="brandForm.englishName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="Logo" label-width="60px">
+        <el-form-item label="Logo" label-width="70px">
             <el-upload
                 class="upload-demo"
                 action="http://localhost:8084/file/upload"
@@ -31,10 +37,10 @@
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
         </el-form-item>
-        <el-form-item label="赞助商" label-width="60px">
+        <el-form-item label="赞助商" label-width="70px">
            <el-input v-model="brandForm.operators" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述" label-width="60px">
+        <el-form-item label="描述" label-width="70px">
            <el-input v-model="brandForm.description" autocomplete="off"></el-input>
         </el-form-item>
         </el-form>
@@ -94,8 +100,9 @@
 <script>
 import {mapActions,mapState,mapMutations} from 'vuex'
 export default {
-  filters: {
-    
+  name:'Brand-list',
+  computed:{
+      ...mapState('productType',['subTypeList']),
   },
   data() {
     return {
@@ -109,19 +116,16 @@ export default {
       listLoading:false,
       dialogFormVisible:false,
       modelTitle:'',
-      nameSearch:''
+      nameSearch:'',
     }
   },
   created() {
-    this.getAllBrandData();
-    this.loadBrand()
+    this.loadBrand();
+    this.getAllType();
   },
   methods: {
-    ...mapActions('brand',['getAllBrand']),
-    ...mapActions('brand',['getBrandPage']),
-    ...mapActions('brand',['addOrUpdateBrand']),
-    ...mapActions('brand',['deleteBrand']),
-    ...mapActions('brand',['getBrandByName']),
+    ...mapActions('brand',['getAllBrand','addOrUpdateBrand','deleteBrand','getBrandByNamePage']),
+    ...mapActions('productType',['getAllType']),
     handleSizeChange(val){
       this.pageParams.pageSize = val;
       this.loadBrand();
@@ -135,10 +139,10 @@ export default {
         page:this.pageParams.page,
         pageSize:this.pageParams.pageSize
       }
-      this.getBrandByName(params).then((res)=> {
+      this.getBrandByNamePage(params).then((res)=> {
           if(res.data.code == 200){
-            this.brands = res.data.result;
-            this.total = res.data.result.length;
+            this.brands = res.data.result.brandList;
+            this.total = res.data.result.total;
             this.$message({
               message: '查询成功',
               type: 'success'
@@ -154,6 +158,7 @@ export default {
     handleAdd(){
       this.modelTitle = '添加品牌' ;
       this.dialogFormVisible = true;
+        this.brandForm ={ }
     },
     handleEdit(index,row){
        this.modelTitle = '更新品牌';
@@ -207,6 +212,10 @@ export default {
      * 编辑保存
      */
     saveBrandHandle(){
+      // let params = {
+      //     brand:this.brandForm,
+      //     subTypeId:this.brandForm.subTypeId
+      // }
       this.addOrUpdateBrand(this.brandForm).then((res) =>{
           if(res.data.code == 200){
             this.$notify({
@@ -221,17 +230,11 @@ export default {
           }
       });    
     },
-    getAllBrandData(){
-      this.getAllBrand().then((res) => {
-          if(res.data.code == 200){
-            this.total = res.data.result.total;
-          }
-      })
-    },
     loadBrand(){
-      this.getBrandPage(this.pageParams).then((res) =>{
+      this.getBrandByNamePage(this.pageParams).then((res) =>{
           if(res.data.code == 200){
-            this.brands = res.data.result;
+            this.brands = res.data.result.brandList;
+            this.total = res.data.result.total;
           }
       })
     },
@@ -249,7 +252,7 @@ export default {
   .brand-search{
     display: inline-block;
     margin: 10px;
-    float:right;
+    float: right;
   }
   .page-container {
     text-align: center;

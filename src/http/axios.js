@@ -10,7 +10,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8084'
 // axios.interceptors.response.use(function(response){
 //     const {data} = response
 //     console.log(response);
-//     response.data = data.data
+//     response.data = data.data//
 //     response.status = data.code
 //     response.statusText = data.message
 //     // 统一异常处理

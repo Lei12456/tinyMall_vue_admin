@@ -4,19 +4,31 @@
 
     <breadcrumb class="breadcrumb-container" />
     <div class="setting-model">
-      <el-dialog title="用户头像" :visible.sync="setting_visible">
-            <el-form>
+      <el-dialog title="修改个人信息" :visible.sync="setting_visible" width="450px">
+            <el-form :model="userForm">
+                <el-form-item label=""  label-width="80px" style="display:none">
+                  <el-input v-model="userForm.id" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="用户名" label-width="80px" >
+                  <el-input v-model="userForm.username" autocomplete="off" ></el-input>
+                </el-form-item>
+                <el-form-item label="密码" label-width="80px">
+                  <el-input v-model="userForm.password" autocomplete="off" ></el-input>
+                </el-form-item>
+                 <el-form-item label="用户头像" label-width="80px">
+                    <el-upload
+                        action="http://localhost:8084/file/upload"
+                        list-type="picture-card"
+                        :on-preview="handlePictureCardPreview"
+                        :on-success='successHandler'>
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+                </el-form-item>
                 <!-- 图片上传 -->
-                <el-upload
-                    action="http://localhost:8084/file/upload"
-                    list-type="picture-card"
-                    :on-preview="handlePictureCardPreview"
-                    :on-success='successHandler'>
-                    <i class="el-icon-plus"></i>
-                </el-upload>
-                <el-dialog :visible.sync="dialogVisible">
+               
+                <!-- <el-dialog :visible.sync="dialogVisible">
                     <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog>
+                </el-dialog> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="setting_visible = false">取 消</el-button>
@@ -69,18 +81,17 @@ export default {
       setting_visible:false,
       dialogImageUrl:'',
       dialogVisible:false,
-      updateHeaderPath:''
+      updateHeaderPath:'',
+      userForm:{}
       //userInfo:localStorage.getItem('userInfo')
     }
   },
   created(){
-    console.log(this.userInfo)
     this.info();
   },
   methods: {
-    ...mapActions('login',['logout']),
-    ...mapActions('login',['info']),
-    ...mapActions('user',['updateUserHeader']),
+    ...mapActions('login',['logout','info']),
+    ...mapActions('user',['addOrUpdateUser']),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -89,27 +100,28 @@ export default {
     },
     userSettingHandle(){
       this.setting_visible = true;
+      this.userForm = this.userInfo;
+      this.userForm.roleId = this.userInfo.role.id;
+      //this.userForm.username = this.userInfo.username;
+      //this.userForm.password = this.userInfo.password;
     },
     handlePictureCardPreview(){
       
     },
     successHandler(res){
      //this.dialogVisible = true;
-     this.dialogImageUrl = res.result;
-     this.updateHeaderPath = res.result;
+    //  this.dialogImageUrl = res.result;
+    //  this.updateHeaderPath = res.result;
+     this.userForm.picture = res.result;
     },
     saveHandle(){
-     let params = {
-        "username":this.userInfo.username,
-        "picture":this.updateHeaderPath
-     }
-     this.updateUserHeader(params).then((res) => {
-        if(res.data.code == 200){
-          this.info();
-          this.setting_visible = false;
-        }
-     });
-     
+      console.log(this.userForm);
+      this.addOrUpdateUser(this.userForm).then((res) => {
+          if(res.data.code == 200){
+            this.info();
+            this.setting_visible = false;
+          }
+      });
     }
   }
 }

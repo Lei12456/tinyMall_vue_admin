@@ -7,7 +7,8 @@ export default {
         token:'',
         userInfo:''
     },
-    getters:{},
+    getters:{
+    },
     mutations:{
         // 登录的突变
         refreshToken(state,token){

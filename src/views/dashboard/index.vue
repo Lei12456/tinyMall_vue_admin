@@ -60,10 +60,7 @@ export default {
     
   },
   mounted(){
-    setTimeout(() =>{
-      this. initOrderChartData();
-    },1000)
-   
+    this.initOrderChartData();
   },
   methods:{
     ...mapActions('index',['showTotalData']),
@@ -85,15 +82,15 @@ export default {
           let completedOrderMap = result.completedOrderMap;
           for(let key in closeOrderMap){
             //xDisplay.push(key);
-            yDisplayClose.push(closeOrderMap[key].length)
+            yDisplayClose.push(closeOrderMap[key])
           }
           for(let key in deliveredOrderMap){
             xDisplay.push(key);
-            yDisplaydeliver.push(deliveredOrderMap[key].length)
+            yDisplaydeliver.push(deliveredOrderMap[key])
           }
           for(let key in completedOrderMap){
             //xDisplay.push(key);
-            yDisplaycomplete.push(completedOrderMap[key].length)
+            yDisplaycomplete.push(completedOrderMap[key])
           }
         }
       })
@@ -131,25 +128,25 @@ export default {
                   name: '待发货订单',
                   type: 'line',
                   stack: '总量',
-                  data: yDisplayClose
+                  data: yDisplaydeliver
               },
               {
                   name: '已完成订单',
                   type: 'line',
                   stack: '总量',
-                  data: yDisplaydeliver
+                  data: yDisplaycomplete
               },
               {
                   name: '已关闭订单',
                   type: 'line',
                   stack: '总量',
-                  data: yDisplaycomplete
+                  data: yDisplayClose
               }, 
           ]   
       }
       setTimeout(() => {
         this.showOrderChart();  
-      },5000)
+      },7000)
     },
     showOrderChart(){
       let myChart = this.$echarts.init(document.getElementById('orderChart'));

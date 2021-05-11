@@ -18,7 +18,7 @@ import Login from './views/login/login'
 const echarts = require('echarts');
 
 import '@/icons' // icon
-import '@/permission' // permission control
+//import '@/permission' // permission control
 
 /**
  * If you don't want to use mock-server
@@ -43,6 +43,7 @@ Vue.config.productionTip = false
 
 import {mapState,mapMutations,mapActions} from 'vuex'
 
+
 new Vue({
   el: '#app',
   router,
@@ -51,10 +52,10 @@ new Vue({
     ...mapState('login',['token'])
   },
   created(){
-    this.initToken()
+    this.initToken();
   }, 
   methods:{
-    ...mapMutations('login',['initToken'])
+    ...mapMutations('login',['initToken']),
   },
   //render: h => h(App)
   render:function(createElement){

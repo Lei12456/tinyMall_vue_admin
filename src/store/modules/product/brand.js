@@ -26,10 +26,10 @@ export default {
         /**
          * 分页查询品牌列表
          */
-        async getBrandPage(context,params){
-            let res = await get('brand/getBrandPage',params);
-            return res;
-        },
+        // async getBrandPage(context,params){
+        //     let res = await get('brand/getBrandPage',params);
+        //     return res;
+        // },
          /**
          * 添加或者更新品牌
          */
@@ -47,8 +47,15 @@ export default {
         /**
          * 根据名字筛选品牌
          */
-        async getBrandByName(context,params){
+        async getBrandByNamePage(context,params){
             let res = await get('brand/getBrandByName',params);
+            return  res;
+        },
+        /**
+         * 根据类型查询品牌
+         */
+         async getBrandBySubType(context,params){
+            let res = await get('brand/getBrandBySubtype',params);
             return  res;
         }
     }
