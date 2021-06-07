@@ -146,7 +146,7 @@ export default {
       }
       setTimeout(() => {
         this.showOrderChart();  
-      },7000)
+      },500)
     },
     showOrderChart(){
       let myChart = this.$echarts.init(document.getElementById('orderChart'));

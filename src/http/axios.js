@@ -2,9 +2,9 @@ import axios from 'axios'
 import qs from 'qs'
 
 // 配置基路径
-//axios.defaults.baseURL = 'http://39.108.158.38:8084'
+axios.defaults.baseURL = 'http://39.108.158.38:8084'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8084'
+//axios.defaults.baseURL = 'http://127.0.0.1:8084'
 
 // 响应拦截(对于响应信息做一些处理)
 // axios.interceptors.response.use(function(response){
@@ -28,7 +28,7 @@ export function get(url, params) {
     method: 'get',
     url,
     params,
-    timeout: 10000,
+    timeout: 50000,
     headers: {
       'X-Requested-With': 'XMLHttpRequest'
     }
